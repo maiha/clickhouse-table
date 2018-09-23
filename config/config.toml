@@ -1,0 +1,17 @@
+[clickhouse]
+client = "clickhouse-client" # "clickhouse-client -h localhost"
+format = "CSV"               # "TSV", "CSVWithNames", "TSVWithNames"
+db     = "default"
+
+[schema]
+table  = "logs"
+column = """
+  date Date,
+  hour Int32,
+  imp  Int64
+  """
+engine = "MergeTree(date, (date, hour), 8192)"
+
+[[logger]]
+path     = "STDOUT" # "run.log"
+level    = "INFO"   # "DEBUG", "WARN", "WARN", "ERROR", "FATAL"

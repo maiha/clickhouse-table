@@ -1,0 +1,25 @@
+name: clickhouse-table
+version: 0.1.0
+
+authors:
+  - maiha <maiha@wota.jp>
+
+targets:
+  clickhouse-table:
+    main: src/bin/main.cr
+
+dependencies:
+  cmds:
+    github: maiha/cmds.cr
+    verison: ">= 0.2.0"
+  opts:
+    github: maiha/opts.cr
+    verison: "0.6.0"
+  toml-config:
+    github: maiha/toml-config.cr
+    version: ">= 0.4.0"
+  shell:
+    github: maiha/shell.cr
+    version: ">= 0.3.0"
+
+license: MIT

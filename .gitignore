@@ -1,0 +1,8 @@
+/docs/
+/lib/
+/bin/
+/tmp/
+/.shards/
+/.crystal-version
+/shard.lock
+/.clickhouse-table.toml
