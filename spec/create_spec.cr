@@ -8,6 +8,13 @@ describe "clickhouse-client" do
         EOF
     end
 
+    it "drops and creates merge table by '-f'" do
+      run!("create -f -n").pretty_stdout.should eq(<<-EOF)
+        clickhouse-client --query='DROP TABLE IF EXISTS logs'
+        clickhouse-table schema merge | clickhouse-client
+        EOF
+    end
+
     it "should respect setting(db)" do
       configure db: "db1"
       run!("create -n").pretty_stdout.should eq(<<-EOF)
