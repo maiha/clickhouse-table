@@ -1,4 +1,4 @@
-# clickhouse-table
+# clickhouse-table [![Build Status](https://travis-ci.org/maiha/clickhouse-table.svg?branch=master)](https://travis-ci.org/maiha/clickhouse-table)
 
 A standalone ClickHouse table manager that provides partial data updates.
 
