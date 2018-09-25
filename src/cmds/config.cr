@@ -1,7 +1,7 @@
 Cmds.command "config" do
-  usage "sample [field] # show sample config"
-  usage "show           # show current config"
-  usage "test           # test current config"
+  usage "sample > .clickhouse-table.toml"
+  usage "show  # show current config"
+  usage "test  # test current config"
 
   SAMPLE = {{ system("cat " + env("PWD") + "/config/config.toml").stringify }}
 
