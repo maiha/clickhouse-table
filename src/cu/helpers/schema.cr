@@ -21,6 +21,11 @@ module Cu::Helpers::Schema
       end
     end    
   end
+
+  protected def read_ymd!
+    date = args.shift? || abort "<ymd> not found"
+    Pretty.date(date).to_s("%Y%m%d")
+  end
 end
 
 class Cmds::Cmd

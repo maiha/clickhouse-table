@@ -3,7 +3,7 @@
 A standalone ClickHouse table manager that provides partial data updates.
 
 ```console
-$ clickhouse-table create
+$ clickhouse-table create  merge
 $ clickhouse-table insert  20180924 diff.csv
 $ clickhouse-table replace 20180924 full.csv
 ```
