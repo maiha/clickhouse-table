@@ -37,7 +37,7 @@ describe "clickhouse-client" do
     end
   end
 
-  describe "schema date <ymd>" do
+  describe "create date <ymd>" do
     it "creates table for the <ymd>" do
       run!("create date 20180924 -n").pretty_stdout.should eq(<<-EOF)
         clickhouse-table schema date 20180924 | clickhouse-client
@@ -52,7 +52,7 @@ describe "clickhouse-client" do
     end
   end
 
-  describe "schema tmp <ymd>" do
+  describe "create tmp <ymd>" do
     it "creates tmp table for the <ymd>" do
       run!("create tmp 20180924 -n").pretty_stdout.should eq(<<-EOF)
         clickhouse-table schema tmp 20180924 | clickhouse-client

@@ -1,7 +1,11 @@
 Cmds.command "config" do
+  include Cu::Helpers::Shell
+  include ClickHouse::Schema
+
   usage "sample > .clickhouse-table.toml"
-  usage "show  # show current config"
-  usage "test  # test current config"
+  usage "from -t logs # generate config from 'logs' table"
+  usage "show         # show current config"
+  usage "test         # test current config"
 
   SAMPLE = {{ system("cat " + env("PWD") + "/config/config.toml").stringify }}
 
@@ -15,6 +19,18 @@ Cmds.command "config" do
     end
   end
 
+  task "from" do
+    sql = show_create_table_from(args.shift?)
+    return if config.nop?
+
+    create = ClickHouse::Schema::Create.parse(sql)
+    s = SAMPLE
+    s = s.sub(/^table .*?$/m, "table = #{create.table.inspect}")
+    s = s.sub(/^(column\s*=\s*""").*?(""")/m){"#{$1}\n#{create.column}\n#{$2}"}
+    s = s.sub(/^engine .*?$/m, "engine = #{create.engine.inspect}")
+    puts s
+  end
+  
   task "show" do
     puts "# %s" % (config.clue? || "unknown")
     puts config
@@ -87,5 +103,41 @@ Cmds.command "config" do
       reason = "not Hash (%s)" % [dst.class]
       results << [clue, "---", "# NG: #{reason}"]
     end
+  end
+
+  private def show_create_table_from(source)
+    case source.to_s
+    when "-"
+      return ARGF.gets_to_end
+    when /^(#{IDENTIFIER})\.(#{IDENTIFIER})$/
+      show_create_table($1, $2)
+    when /^(#{IDENTIFIER})$/
+      show_create_table(nil, $1)
+    when ""
+      show_create_table(nil, nil)
+    else
+      abort "invalid table name: '#{source}'. try '-t <name>'"
+    end
+  end
+
+  private def show_create_table(db, table)
+    db    ||= config.db?
+    table ||= config.table? || abort "expected table name. try '-t <name>'"
+
+    # by clickhouse-client
+    cmd = String.build do |s|
+      s << config.clickhouse_client
+      s << " -h #{config.host}" if config.host?
+      s << " -d #{db}" if db
+      s << " --query='SHOW CREATE TABLE #{table} FORMAT CSV'"
+    end
+    shell.run(cmd)
+    buf = shell.stdout
+    return buf if config.nop?
+
+    csv = CSV.parse(buf)
+    row = csv[0]? || abort "invalid csv. expected rows[0]: #{buf}"
+    col = row[0]? || abort "invalid csv. expected cols[0]: #{row}"
+    return col
   end
 end

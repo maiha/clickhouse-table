@@ -9,10 +9,15 @@ class Cu::Config < TOML::Config
   bool "force"
   str  "clickhouse/client"
   str  "clickhouse/format", format
+  str  "clickhouse/host", host
   str  "clickhouse/db", db
-  str  "schema/table"
-  str  "schema/engine"
-  str  "schema/column"
+  str  "schema/table", table
+  str  "schema/engine", engine
+  str  "schema/column", column
+
+  def clickhouse_client
+    clickhouse_client? || "clickhouse-client"
+  end
 
   def to_s(io : IO)
     max = @paths.keys.map(&.size).max
@@ -22,7 +27,7 @@ class Cu::Config < TOML::Config
   end
 
   private def not_found(key)
-    raise NotFound.new("config error: '#{key}'")
+    raise NotFound.new("missing config: '#{key}'")
   end
 
   private def pretty_dump(io : IO = STDERR)

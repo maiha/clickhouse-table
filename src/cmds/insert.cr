@@ -9,6 +9,6 @@ Cmds.command "insert" do
     ymd  = Pretty.date(date).to_s("%Y%m%d")
     dst  = build_table(suffix: ymd)
 
-    shell.run("#{client} --query='INSERT INTO #{dst} FORMAT #{format}' <  #{path}")
+    shell.run("#{client} --query='INSERT INTO #{dst} FORMAT #{format}' < #{path}")
   end
 end

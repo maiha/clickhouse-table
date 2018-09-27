@@ -1,6 +1,7 @@
 [clickhouse]
 client = "clickhouse-client" # "clickhouse-client -h localhost"
 format = "CSV"               # "TSV", "CSVWithNames", "TSVWithNames"
+host   = "localhost"
 db     = "default"
 
 [schema]

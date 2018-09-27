@@ -12,6 +12,7 @@ $ clickhouse-table replace 20180924 full.csv
 - create table schema
 - insert table data
 - replace table data
+- visualization of commands by dry-run ("-n" option)
 
 #### Assumes
 - client: `clickhouse-client`
@@ -55,13 +56,23 @@ $ clickhouse-table config sample > .clickhouse-table.toml
 $ vi .clickhouse-table.toml
 ```
 
+Or, you can generate config from existing table.
+
+```console
+$ clickhouse-table config from default.logs -n
+clickhouse-client -d default --query='SHOW CREATE TABLE logs FORMAT CSV'
+
+$ clickhouse-table config from default.logs > .clickhouse-table.toml
+```
+
 #### insert data
 
 Invoke `insert` command for daily operation. 
 This accumulates the data each operations.
 
 ```console
-$ clickhouse-table insert 20180924 data.csv
+$ clickhouse-table insert 20180924 data.csv -n
+clickhouse-client --query='INSERT INTO logs_20180924 FORMAT CSV' < data.csv
 ```
 
 #### replace data

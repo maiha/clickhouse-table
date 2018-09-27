@@ -11,10 +11,13 @@ targets:
 dependencies:
   cmds:
     github: maiha/cmds.cr
-    verison: ">= 0.2.0"
+    verison: ">= 0.2.1"
   opts:
     github: maiha/opts.cr
     verison: "0.6.0"
+  var:
+    github: maiha/var.cr
+    verison: ">= 1.1.0"
   toml-config:
     github: maiha/toml-config.cr
     version: ">= 0.4.0"
