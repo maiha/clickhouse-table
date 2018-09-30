@@ -11,7 +11,7 @@ targets:
 dependencies:
   cmds:
     github: maiha/cmds.cr
-    verison: ">= 0.2.1"
+    verison: ">= 0.2.2"
   opts:
     github: maiha/opts.cr
     verison: "0.6.0"
