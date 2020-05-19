@@ -1,5 +1,6 @@
 class Cu::Config < TOML::Config
-  klass Error < Exception
+  class Error < Exception
+  end
 
   var clue : String
   var path : String

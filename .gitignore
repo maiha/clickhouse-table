@@ -3,6 +3,7 @@
 /bin/
 /tmp/
 /.shards/
+/.crystal
 /.crystal-version
 /shard.lock
 /.clickhouse-table.toml

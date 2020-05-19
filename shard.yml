@@ -7,22 +7,19 @@ authors:
 targets:
   clickhouse-table:
     main: src/bin/main.cr
+  clickhouse-table-dev:
+    main: src/bin/main.cr
 
 dependencies:
   cmds:
     github: maiha/cmds.cr
-    verison: ">= 0.2.2"
   opts:
     github: maiha/opts.cr
-    verison: "0.6.0"
   var:
     github: maiha/var.cr
-    verison: ">= 1.1.0"
   toml-config:
     github: maiha/toml-config.cr
-    version: ">= 0.4.0"
   shell:
     github: maiha/shell.cr
-    version: ">= 0.3.0"
 
 license: MIT

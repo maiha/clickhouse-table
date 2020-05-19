@@ -38,7 +38,14 @@ class Main
     cmd = Cmds[args.shift?].new
     cmd.config = load_config
     cmd.run(args)
-  rescue err : Cmds::Abort | Cmds::CommandNotFound | Cmds::TaskNotFound | TOML::Config::NotFound | Cu::Config::Error
+  rescue Cmds::Finished
+  rescue err : Cmds::Navigatable
+    STDERR.puts Cmds::Navigator.new.navigate(err)
+    exit err.exit_code
+  rescue err : Cmds::Abort
+    STDERR.puts err.to_s.chomp.colorize(:red)
+    exit 1
+  rescue err : Cmds::Abort | TOML::Config::NotFound | Cu::Config::Error
     STDERR.puts err.to_s.colorize(:red)
     exit 1
   end
