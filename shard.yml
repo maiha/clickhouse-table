@@ -11,6 +11,8 @@ targets:
     main: src/bin/main.cr
 
 dependencies:
+  clickhouse:
+    github: maiha/clickhouse.cr
   cmds:
     github: maiha/cmds.cr
   opts:

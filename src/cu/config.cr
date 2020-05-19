@@ -28,7 +28,16 @@ class Cu::Config < TOML::Config
   end
 
   private def not_found(key)
-    raise NotFound.new("missing config: '#{key}'")
+    case key
+    when "clickhouse/host"
+      raise NotFound.new("missing <host>: use -h <host> or set config: '#{key}'")
+    when "clickhouse/db"
+      raise NotFound.new("missing <db>: use -d <db> or set config: '#{key}'")
+    when "schema/table"
+      raise NotFound.new("missing <table_name>: use -t <table_name> or set config: '#{key}'")
+    else
+      raise NotFound.new("missing config: '#{key}'")
+    end
   end
 
   private def pretty_dump(io : IO = STDERR)

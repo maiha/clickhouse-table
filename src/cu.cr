@@ -2,6 +2,7 @@
 require "csv"
 
 # shards
+require "clickhouse"
 require "cmds"
 require "shell"
 require "toml-config"

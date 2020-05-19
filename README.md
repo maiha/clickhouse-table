@@ -84,6 +84,28 @@ This replaces the data for the day.
 $ clickhouse-table replace 20180924 data.csv
 ```
 
+#### domo
+
+`schema.json` task generates a schema data for **domo** from existing table.
+
+```console
+$ clickhouse-table domo schema.json -t system.contributors | tee schema.json
+{
+  "name": "system.contributors",
+  "description": "ClickHouse: system.contributors",
+  "schema": {
+    "columns": [
+      {
+        "type": "STRING",
+        "name": "name"
+      }
+    ]
+  }
+}
+
+$ curl -X POST --data-binary @schema.json https://api.domo.com/v1/datasets
+```
+
 ## Development
 
 ```console
